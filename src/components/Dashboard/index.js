@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import fetcher from '../../api/fetcher';
-import useSWR from 'swr';
+import useFetch from '../../hooks/useFetch';
 import styled from 'styled-components';
 
 const Column = styled.div`
@@ -11,8 +10,8 @@ const Column = styled.div`
 
 function Dashboard () {
     const [activeRegion, setActiveRegion] = useState(null);
-    const {data: regions, error: regionsError} = useSWR('regions.all', fetcher)
-    const {data: provinces, error: provincesError} = useSWR(activeRegion ? ['provinces.all', activeRegion] : null, fetcher)
+    const {data: regions, error: regionsError} = useFetch('regions.all');
+    const {data: provinces, error: provincesError} = useFetch('provinces.all', activeRegion);
 
     if (regionsError||provincesError) return <p>Error</p>;
     if (regions) {
